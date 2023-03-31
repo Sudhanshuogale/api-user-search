@@ -22,7 +22,6 @@ function index() {
   const [isError, setIsError] = useState("");
 
   const [filteredusers, setFilteredusers] = useState([]);
-  console.log("filteredusers", filteredusers);
   const [input, setInput] = useState("");
 
   async function fetchUserName() {
@@ -51,34 +50,53 @@ function index() {
   return (
     <>
       <Container>
-        <Grid container spacing={5}>
-          <Grid item>
-            <TextField
-              id="outlined-basic"
-              label="Username"
-              variant="outlined"
-              value={input}
-              onChange={(event) => setInput(event.target.value)}
-            />
+        <form onSubmit={handleSearch}>
+          <Grid container spacing={5}>
+            <Grid item>
+              <TextField
+                id="outlined-basic"
+                label="Username"
+                placeholder="User name"
+                variant="outlined"
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={handleSearch}
+              >
+                Search
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Button variant="contained" color="success" onClick={handleSearch}>
-              Search
-            </Button>
-          </Grid>
-        </Grid>
+        </form>
         <h1 style={{ margin: "30px 10px" }}>Result</h1>
 
         {isError !== "" && <h2> {isError}</h2>}
         <div>
           {filteredusers?.map((item, key) => (
             <StyledDiv key={key}>
-              <StyledTypography>Index is {key + 1}</StyledTypography>
-              <StyledTypography>ID is {item.id}</StyledTypography>
-              <div>
-                <img src={item.avatar_url}></img>
-              </div>
-              <StyledTypography>Name is {item.login}</StyledTypography>
+              <Container>
+                <Grid container spacing={2}>
+                  <Grid item>
+                    <img
+                      alt={item.avatar_url}
+                      src={item.avatar_url}
+                      width="100px"
+                      style={{ border: "1px", borderRadius: "50px" }}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <StyledTypography>Name is {item.login}</StyledTypography>
+                    <StyledTypography>
+                      <a href="item.avatar_url">URL</a>
+                    </StyledTypography>
+                  </Grid>
+                </Grid>
+              </Container>
             </StyledDiv>
           ))}
         </div>
